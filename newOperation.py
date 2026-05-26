@@ -203,7 +203,8 @@ def run(protocol: protocol_api.ProtocolContext) -> None:
         "Base": reservoir_24["A3"]
     }
     Dest = {
-        "A": reservoir_24["A2"], "T": reservoir_24["B2"], "G": reservoir_24["C2"], "C": reservoir_24["D2"]
+        "A": reservoir_24["A2"], "T": reservoir_24["B2"], "G": reservoir_24["C2"], "C": reservoir_24["D2"],
+        "A_Mix": reservoir_24["A2"], "T_Mix": reservoir_24["B2"], "G_Mix": reservoir_24["C2"], "C_Mix": reservoir_24["D2"],
     }
     def transfer(Liquid, Volume, Destination=None, Name="Untitled") -> None:
         pipette_left.pick_up_tip(tip_rack.wells()[TipRackOrganization[Liquid]])
@@ -221,12 +222,19 @@ def run(protocol: protocol_api.ProtocolContext) -> None:
             ),
         )
         pipette_left.return_tip()
+
+    def mix(Type) -> None:
+        pipette_left.pick_up_tip(tip_rack.wells()[TipRackOrganization[Type]])
+        pipette_left.mix(5, 50, Dest[Type])
+        pipette_left.return_tip()
     
     # PROTOCOL STEPS
     transfer("Wash", 1000, column_holder["A1"], "ColumnHolderWash1")
     transfer("Wash", 1000, column_holder["A1"], "ColumnHolderWash2")
     transfer("C", 120, Name="Monomer C -> mix C")
     transfer("Base", 30, Dest["C"])
+    mix("C_Mix")
+
     
 
     # Step 3: wash pause
