@@ -1,0 +1,63 @@
+{
+    "ordering": [
+        [
+            "A1"
+        ]
+    ],
+    "brand": {
+        "brand": "Danny",
+        "brandId": [
+            "Danny'sStuff"
+        ]
+    },
+    "metadata": {
+        "displayName": "Danny 1 Reservoir 350000 µL",
+        "displayCategory": "reservoir",
+        "displayVolumeUnits": "µL",
+        "tags": []
+    },
+    "dimensions": {
+        "xDimension": 127.5,
+        "yDimension": 85.4,
+        "zDimension": 110
+    },
+    "wells": {
+        "A1": {
+            "depth": 106,
+            "totalLiquidVolume": 350000,
+            "shape": "circular",
+            "diameter": 80,
+            "x": 63.75,
+            "y": 42.7,
+            "z": 4
+        }
+    },
+    "groups": [
+        {
+            "metadata": {
+                "wellBottomShape": "flat"
+            },
+            "wells": [
+                "A1"
+            ]
+        }
+    ],
+    "parameters": {
+        "format": "irregular",
+        "quirks": [
+            "centerMultichannelOnWells",
+            "touchTipDisabled"
+        ],
+        "isTiprack": false,
+        "isMagneticModuleCompatible": false,
+        "loadName": "danny_1_reservoir_350000ul"
+    },
+    "namespace": "custom_beta",
+    "version": 1,
+    "schemaVersion": 2,
+    "cornerOffsetFromSlot": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    }
+}
