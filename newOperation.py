@@ -209,19 +209,8 @@ def run(protocol: protocol_api.ProtocolContext) -> None:
     }
     def transfer(Liquid, Volume, Destination=None, Name="Untitled") -> None:
         pipette_left.pick_up_tip(tip_rack.wells()[TipRackOrganization[Liquid]])
-        pipette_left.transfer_with_liquid_class(
-            volume=Volume,
-            source=[Source[Liquid]],
-            dest=[Dest[Liquid] if Destination==None else Destination],
-            new_tip="never",
-            trash_location=protocol.fixed_trash,
-            keep_last_tip=True,
-            tip_racks=[tip_rack],
-            liquid_class=protocol.define_liquid_class(
-                name=Name,
-                properties=properties
-            ),
-        )
+        pipette_left.aspirate(Volume, Source[Liquid])
+        pipette_left.dispense(Volume, Dest[Liquid] if Destination==None else Destination)
         pipette_left.return_tip()
 
     def mix(Type) -> None:
@@ -235,8 +224,8 @@ def run(protocol: protocol_api.ProtocolContext) -> None:
         transfer("Wash", 1000, column_holder["A1"], "Wash2 -> ColumnHolder")
         transfer(Letter, 120, Name="Monomer {Letter} -> Mix {Letter}")
         transfer("Base", 30, Dest[Letter], Name="Base -> Mix {Letter}")
-        mix("{Letter}_Mix")
-        transfer("{Letter}_Mix", 150, column_holder["A1"], "Mix {Letter} -> ColumnHolder")
+        mix(Letter + "_Mix")
+        transfer(Letter +"_Mix", 120, column_holder["A1"], "Mix {Letter} -> ColumnHolder")
         protocol.delay(seconds=30, msg="column mix pause")
         transfer("WashOH", 800, column_holder["A1"], "WashOH -> ColumnHolder")
         transfer("Deprotect", 800, column_holder["A1"], "Deprotect -> ColumnHolder")
